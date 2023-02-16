@@ -4,7 +4,7 @@ import errno
 from lib.dht import DHT22
 from machine import Pin
 
-sensor = DHT22(Pin(15))
+sensor = DHT22(Pin(15, Pin.IN, Pin.PULL_UP))
 
 
 def measure() -> dict:
