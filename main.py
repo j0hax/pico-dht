@@ -30,4 +30,4 @@ def report(t):
 from machine import Timer
 
 tim = Timer()
-tim.init(period=5000, mode=Timer.PERIODIC, callback=report)
+tim.init(period=3000, mode=Timer.PERIODIC, callback=report)
