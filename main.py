@@ -4,6 +4,7 @@ import errno
 from lib.dht import DHT22
 from machine import Pin
 
+led = Pin("LED", Pin.OUT)
 sensor = DHT22(Pin(15, Pin.IN, Pin.PULL_UP))
 
 
@@ -23,8 +24,10 @@ def measure() -> dict:
 
 
 def report(t):
+    led.on()
     data = measure()
     print(json.dumps(data))
+    led.off()
 
 
 from machine import Timer
