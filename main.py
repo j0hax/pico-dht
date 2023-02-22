@@ -4,21 +4,33 @@ import errno
 from lib.dht import DHT22
 from machine import Pin, ADC
 
-
+# Address the onboard LED
 led = Pin("LED", Pin.OUT)
+
+# Address the DHT22 Module
 sensor = DHT22(Pin(15, Pin.IN, Pin.PULL_UP))
 
-sensor_temp = ADC(4)
+# Address the onboard temperature diode
+sensor_diode = ADC(4)
+
+# Reference voltage divided by ADC resolution
 conversion_factor = 3.3 / (1 << 16)
 
 
 def measure_onboard() -> float:
-    voltage = sensor_temp.read_u16() * conversion_factor
+    """Measures temperature using a diode on the RP2040.
+    The calculated temperature may fluctuate with the reference voltage.
+    For more information see section 4.9.5 of the RP2040 documentation.
+    """
+    voltage = sensor_diode.read_u16() * conversion_factor
     c = 27 - (voltage - 0.706) / 0.001721
     return round(c, 1)
 
 
 def measure() -> dict:
+    """Measures DHT22 and onboard temperature values.
+    In case of any I/O errors, the errno field will be set.
+    """
     t = 0
     h = 0
     o = 0
@@ -36,6 +48,9 @@ def measure() -> dict:
 
 
 def report(t):
+    """Measures data and prints it as JSON to serial.
+    While measuring, the onboard LED will be turned on.
+    """
     led.on()
     data = measure()
     print(json.dumps(data))
