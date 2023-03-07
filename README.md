@@ -19,7 +19,6 @@ Digital temperature and humidity reporting for the Raspberry Pi Pico, used to co
 ### Notes
 - Many variants of the DHT22 will have four pins. The third pin is unused.
 - A pull-up resistor can be used but is not required, as the DHT22 has its own built-in.
-- Due to the simplicity of the software, no platform-specific code is needed and as such _probably_ works on a range of microcontrollers. If you're using this on another platform, I'd love to hear from you!
 
 ## Install
 By copying `main.py` to the Pico's on-board flash memory, it is executed at every boot.
@@ -37,5 +36,11 @@ For an example implementation to read this data, see [dht22-nagios](https://gith
 
 ### Connection Errors
 If the wires are not soldered and knocked around, a connection may become flaky and a GPIO error can occur. Any errors when reading data are reported in the JSON's `error` attribute as a POSIX errno.
+
+## Case
+
+The 3D-Printed case can be used to mount the internals. It features a hook to hang the arrangement from the ceiling.
+
+[OpenSCAD](https://openscad.org/) is used to model, customize and compile the final STL.
 
 [^1]: Unfortunately, WPA2-EAP Networks such as eduroam are not supported very well by MicroPython at the moment.
