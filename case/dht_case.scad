@@ -46,7 +46,7 @@ module sensorbody(l=100, w=30, h=30) {
         
         // Cable channel
         mid = (w - 10) / 2;
-        translate([sxo + sheight, mid, 1])
+        translate([sxo + sheight, mid, 2])
         cube([l, 10, h]);
         
         // Screw holes
@@ -60,59 +60,13 @@ module sensorbody(l=100, w=30, h=30) {
         }
         
         // Pi section
-        translate([pxo, pyo, 1])
+        translate([pxo, pyo, 2])
         cube([pheight, pwidth, h]);
     }
     
     // Pin
     translate([sxo + (5.1 / 1.5), syo + swidth/2, szo])
     cylinder(d=2.9, h=(h-szo)/2);
-    
-    // Pi Pins
-    /*
-    translate([pxo + 2 + 1, pyo + 4.8 + 1, 0])
-    cylinder(d=2, h= 10);
-    translate([pxo + 2 + 1, pyo + 11.4 + 4.8 + 1, 0])
-    cylinder(d=2, h= 10);
-    
-    translate([pxo + pheight - 1.6 - 1, pyo + 4.8 + 1, 0])
-    cylinder(d=2, h= 10);
-    translate([pxo + pheight - 1.6 - 1, pyo + 11.4 + 4.8 + 1, 0])
-    cylinder(d=2, h= 10);
-    */
-}
-
-module cover(l=100, w=30, h=2) {
-    difference() {
-        cube([l, w, h]);
-        
-        // Sensor Hole
-        syo = (w-swidth)/2;
-        sxo = 2 + 5;
-        translate([sxo, syo, 0])
-        cube([sheight - 5, swidth, h]);
-        
-        // Screw Holes
-        translate([l/3, 0, 0]) {
-            translate([0, 5, 0])
-            cylinder(h=h, d=3);
-            
-            
-            translate([0, w-5, 0])
-            cylinder(h=h, d=3);
-        }
-        
-        // IKM Logo ;)
-        linear_extrude(h)
-        translate([l * 0.5, w/4, 0])
-        import("ikm-logo.svg");
-
-    }
-    
-    // Bottom cover
-    byo = (w - 10) / 2;
-    translate([l - 2, byo, -22])
-    cube([2, 10, 22]);
 }
 
 translate([-30, 15, 0])
