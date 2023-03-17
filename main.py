@@ -1,5 +1,7 @@
 import json
 import errno
+from utime import sleep
+import _thread
 
 from lib.dht import DHT11
 from machine import Pin, ADC
@@ -16,6 +18,11 @@ sensor_diode = ADC(4)
 # Reference voltage divided by ADC resolution
 conversion_factor = 3.3 / (1 << 16)
 
+# Synchronization control
+baton = _thread.allocate_lock()
+
+# Our Data dict
+data = dict()
 
 def measure_onboard() -> float:
     """Measures temperature using a diode on the RP2040.
@@ -24,13 +31,14 @@ def measure_onboard() -> float:
     """
     voltage = sensor_diode.read_u16() * conversion_factor
     c = 27 - (voltage - 0.706) / 0.001721
-    return round(c, 1)
+    return round(c)
 
 
 def measure() -> dict:
-    """Measures DHT22 and onboard temperature values.
+    """Measures DHT and onboard temperature values.
     In case of any I/O errors, the errno field will be set.
     """
+    led.on()
     t = 0
     h = 0
     o = 0
@@ -47,17 +55,25 @@ def measure() -> dict:
     return {"temperature": t, "onboard": o, "humidity": h, "error": err}
 
 
-def report(t):
-    """Measures data and prints it as JSON to serial.
+def report():
+    """Designed to run on the RP2040s second core.
+    Its job is to update the data dict at a periodic rate.
     While measuring, the onboard LED will be turned on.
     """
-    led.on()
-    data = measure()
+    global data
+    while True:
+        led.on()
+        baton.acquire()
+        data = measure()
+        baton.release()
+        led.off()
+        sleep(1)
+
+_thread.start_new_thread(report, ())
+
+sleep(2)
+while True:
+    sleep(0.1)
+    baton.acquire()
     print(json.dumps(data))
-    led.off()
-
-
-from machine import Timer
-
-tim = Timer()
-tim.init(period=3000, mode=Timer.PERIODIC, callback=report)
+    baton.release()
