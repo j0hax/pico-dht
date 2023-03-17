@@ -62,6 +62,12 @@ module sensorbody(l=100, w=30, h=30) {
         // Pi section
         translate([pxo, pyo, 2])
         cube([pheight, pwidth, h]);
+        
+        // IKM Logo in the Pi Part
+        translate([pheight, w, h/4])
+        rotate([90, 0, 0])
+        linear_extrude(w)
+        import("ikm-logo.svg");
     }
     
     // Pin
