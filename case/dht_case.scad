@@ -13,14 +13,14 @@ module hook(d=15, w=30, h=32) {
         hull() {
             //translate([0, 0, 10])
             cylinder(h=h/2, d=w);
-            translate([w - 1, -w/2, 0])
+            translate([w/2 - 1, -w/2, 0])
             cube([1, w, h]);
         }
         
         // Inner cylinder and slit
         cylinder(h=h, d=d);
         
-        rotate([0, 0, 45])
+        rotate([0, 0, 67.5])
         translate([0, -2.55, 0])
         cube([w, d/2, 30]);
     }
@@ -75,6 +75,6 @@ module sensorbody(l=100, w=30, h=30) {
     cylinder(d=2.9, h=(h-szo)/2);
 }
 
-translate([-30, 15, 0])
+translate([-15, 15, 0])
 hook();
 sensorbody();
