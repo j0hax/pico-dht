@@ -1,8 +1,14 @@
 $fn=128;
 
 // Sensor dimensions
-swidth = 15 + 1;
-sheight = 25 + 1;
+/*
+    swidth = 15 + 1;
+    sheight = 25 + 1;
+*/
+
+swidth = 12 + 1;
+sheight = 15.5 + 1;
+sdepth = 5.5 + 1;
 
 // Pi dimensions
 pwidth = 21 + 2;
@@ -30,7 +36,7 @@ module sensorbody(l=100, w=30, h=30) {
     // Sensor offsets
     sxo = 2;
     syo = (w-swidth)/2;
-    szo = h - 8;
+    szo = h - sdepth;
     
     pxo = (l-pheight) - 2;
     pyo = (w-pwidth)/2;
@@ -42,7 +48,7 @@ module sensorbody(l=100, w=30, h=30) {
         
         // Sensor section
         translate([sxo, syo, szo])
-        cube([sheight, swidth, h]);
+        cube([sheight, swidth, sdepth]);
         
         // Cable channel
         mid = (w - 10) / 2;
@@ -70,9 +76,11 @@ module sensorbody(l=100, w=30, h=30) {
         import("ikm-logo.svg");
     }
     
-    // Pin
-    translate([sxo + (5.1 / 1.5), syo + swidth/2, szo])
-    cylinder(d=2.9, h=(h-szo)/2);
+    // Pin -- not needed for DHT11
+    /*
+        translate([sxo + (5.1 / 1.5), syo + swidth/2, szo])
+        cylinder(d=2.9, h=(h-szo)/2);
+    */
 }
 
 translate([-15, 15, 0])

@@ -1,11 +1,11 @@
-# dht22
+# pico-dht
 Digital temperature and humidity reporting for the Raspberry Pi Pico, used to continuously monitor a server room at the Mechanical Engineering Campus of Leibniz University Hannover.
 
 ![The project without its case](doc/internals.jpg "The project without its case")
 
 ## Hardware Used
 1. Raspberry Pi Pico
-2. DHT22/AM2302 sensor
+2. DHT22/AM2302 or DHT11 sensor
 3. Wires/Breadboard
 4. 3D-printed case (optional)
 
@@ -17,7 +17,7 @@ Digital temperature and humidity reporting for the Raspberry Pi Pico, used to co
 | GND           | Ground  | 4         |
 
 ### Notes
-- Many variants of the DHT22 will have four pins. The third pin is unused.
+- Many variants of the DHT22/DHT11 will have four pins. The third pin is unused.
 - A pull-up resistor can be used but is not required, as the DHT22 has its own built-in.
 
 ## Install
@@ -38,7 +38,6 @@ For an example implementation to read this data, see [dht22-nagios](https://gith
 If the wires are not soldered and knocked around, a connection may become flaky and a GPIO error can occur. Any errors when reading data are reported in the JSON's `error` attribute as a POSIX errno.
 
 ## Case
-
 The 3D-Printed case can be used to mount the internals. It features a hook to hang the arrangement from the ceiling.
 
 [OpenSCAD](https://openscad.org/) is used to model, customize and compile the final STL.

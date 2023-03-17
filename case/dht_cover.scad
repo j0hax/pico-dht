@@ -1,8 +1,8 @@
 $fn=128;
 
 // Sensor dimensions
-swidth = 15 + 1;
-sheight = 25 + 1;
+swidth = 12 * 0.9;
+sheight = 15.5 * 0.9;
 
 // Pi dimensions
 pwidth = 21 + 2;
@@ -16,7 +16,7 @@ module cover(l=100, w=30, h=2) {
         syo = (w-swidth)/2;
         sxo = 2 + 5;
         translate([sxo, syo, 0])
-        cube([sheight - 5, swidth, h]);
+        cube([sheight, swidth, h]);
         
         // Screw Holes
         translate([l/3, 0, 0]) {

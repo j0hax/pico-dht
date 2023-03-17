@@ -1,14 +1,14 @@
 import json
 import errno
 
-from lib.dht import DHT22
+from lib.dht import DHT11
 from machine import Pin, ADC
 
 # Address the onboard LED
 led = Pin("LED", Pin.OUT)
 
 # Address the DHT22 Module
-sensor = DHT22(Pin(15, Pin.IN, Pin.PULL_UP))
+sensor = DHT11(Pin(15, Pin.IN, Pin.PULL_UP))
 
 # Address the onboard temperature diode
 sensor_diode = ADC(4)
