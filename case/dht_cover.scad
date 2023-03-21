@@ -14,7 +14,7 @@ module cover(l=100, w=30, h=2) {
         
         // Sensor Hole
         syo = (w-swidth)/2;
-        sxo = 2 + 5;
+        sxo = 2;
         translate([sxo, syo, 0])
         cube([sheight, swidth, h]);
         
@@ -27,19 +27,18 @@ module cover(l=100, w=30, h=2) {
             translate([0, w-5, 0])
             cylinder(h=h, d=3);
         }
-        
-        // IKM Logo ;)
-        linear_extrude(h)
-        translate([l * 0.5, w/4, 0])
-        import("ikm-logo.svg");
-
     }
     
     // Bottom cover
-    inswidth = 9;
-    byo = (w - inswidth) / 2;
-    translate([l - 2, byo, -22])
-    cube([2, inswidth, 22]);
+    hull() {
+       inswidth = 9;
+       byo = (w - inswidth) / 2;
+       translate([l - 2, byo, -22]) {
+           translate([-10, 0, 22])
+           cube([1, inswidth, 1]);
+           cube([2, inswidth, 22]);
+       }
+    }
 }
 
 cover();
