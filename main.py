@@ -1,10 +1,11 @@
 import json
 import errno
-from utime import sleep
 import _thread
-
+from utime import sleep
 from lib.dht import DHT11
 from machine import Pin, ADC
+
+sleep(1)
 
 # Address the onboard LED
 led = Pin("LED", Pin.OUT)
@@ -69,9 +70,12 @@ def report():
         led.off()
         sleep(1)
 
+
+# Sleep to ensure no race conditions, then start
+sleep(1)
 _thread.start_new_thread(report, ())
 
-sleep(2)
+sleep(1)
 while True:
     sleep(0.1)
     baton.acquire()
